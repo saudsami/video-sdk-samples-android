@@ -1,4 +1,4 @@
-#SDK quickstart
+# SDK quickstart
 
 Real-time video immerses people in the sights and sounds of human connections, keeping them engaged in your app longer.
 
