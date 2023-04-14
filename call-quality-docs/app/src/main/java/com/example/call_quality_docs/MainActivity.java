@@ -32,11 +32,11 @@ import io.agora.rtc2.video.VideoEncoderConfiguration;
 public class MainActivity extends AppCompatActivity {
 
     // Fill the App ID of your project generated on Agora Console.
-    private final String appId = "9d2498880e934632b38b0a68fa2f1622"; //"<Your app Id>";
+    private final String appId = "<Your app Id>";
     // Fill the channel name.
-    private String channelName = "demo"; // "Your channel name";
+    private String channelName = "Your channel name";
     // Fill the temp token generated on Agora Console.
-    private String token = "007eJxTYHgusWO58X7V7cuyFym92ltn5XlBWvVfxzM7Uxk2L8Hf61coMFimGJlYWlhYGKRaGpuYGRslGVskGSSaWaQlGqUZmhkZldpapjQEMjIoqC1lZGSAQBCfhSElNTefgQEA/3IdQA=="; // "<your access token>";
+    private String token = "<your access token>";
     // An integer that identifies the local user.
     private int uid = 0;
     private boolean isJoined = false;
