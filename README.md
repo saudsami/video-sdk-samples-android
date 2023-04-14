@@ -1,4 +1,4 @@
-# Agora Video SDK Samples projects for Android
+# Agora Video SDK sample projects for Android
 
 This repository contains code from the following demo projects presented in Agora documentation:
 
