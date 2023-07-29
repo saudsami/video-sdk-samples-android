@@ -1,4 +1,3 @@
 package io.agora.android_reference_app
 
-class ListItem {
-}
+data class ListItem(val title: String, val type: String = "")
