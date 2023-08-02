@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClick(item: ListItem) {
                 when (item.title) {
                     "Basic Implementation" -> launchActivity(BasicImplementationActivity::class.java)
+                    "Source Authentication" -> launchActivity(AuthenticationActivity::class.java)
                 }
             }
         })
