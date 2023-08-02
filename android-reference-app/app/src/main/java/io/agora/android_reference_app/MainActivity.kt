@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,19 +32,18 @@ class MainActivity : AppCompatActivity() {
         // Set up the adapter with the list of items and click listener
         val adapter = ItemListAdapter(itemList, object : ItemListAdapter.ItemClickListener {
             override fun onItemClick(item: ListItem) {
-                val message = "Clicked on ${item.title}"
-                launchActivity(get_started_sdk_activity::class.java)
-                //Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+                when (item.title) {
+                    "Basic Implementation" -> launchActivity(BasicImplementationActivity::class.java)
+                }
             }
         })
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
 
     private fun launchActivity(activityClass: Class<*>) {
         // Launch the corresponding activity when an item is clicked
-        val intent = Intent(this, activityClass)
+        val intent = Intent(applicationContext, activityClass)
         startActivity(intent)
     }
 }
