@@ -1,4 +1,4 @@
-package com.example.quickstart_base;
+package io.agora.android_reference_app;
 
 import com.example.agora_manager.AgoraManager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.RadioGroup;
 
-public class MainActivity extends AppCompatActivity {
+public class get_started_sdk_activity extends AppCompatActivity {
     private AgoraManager agoraManager;
     private LinearLayout baseLayout;
     private Button btnJoinLeave;
@@ -18,18 +18,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.get_started_sdk_layout);
         // Find the root view of the included layout
         baseLayout = findViewById(R.id.base_layout);
         // Find the widgets inside the included layout using the root view
-        btnJoinLeave = baseLayout.findViewById(com.example.agora_manager.R.id.btnJoinLeave);
+        btnJoinLeave = baseLayout.findViewById(R.id.btnJoinLeave);
         // Create an instance of the AgoraManager class
         agoraManager = new AgoraManager(this);
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         agoraManager.setVideoFrameLayouts(
-                baseLayout.findViewById(com.example.agora_manager.R.id.local_video_view_container),
-                baseLayout.findViewById(com.example.agora_manager.R.id.remote_video_view_container)
+                baseLayout.findViewById(R.id.local_video_view_container),
+                baseLayout.findViewById(R.id.remote_video_view_container)
         );
         agoraManager.setListener(new AgoraManager.AgoraManagerListener() {
             @Override
@@ -39,22 +39,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RadioGroup radioGroup = findViewById(com.example.agora_manager.R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
 
         if (agoraManager.getCurrentProduct()==AgoraManager.ProductName.INTERACTIVE_LIVE_STREAMING
-            || agoraManager.getCurrentProduct()==AgoraManager.ProductName.BROADCAST_STREAMING) {
+                || agoraManager.getCurrentProduct()==AgoraManager.ProductName.BROADCAST_STREAMING) {
             radioGroup.setVisibility(View.VISIBLE);
         } else {
             radioGroup.setVisibility(View.GONE);
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            agoraManager.setBroadcasterRole(checkedId == com.example.agora_manager.R.id.radioButtonBroadcaster);
+            agoraManager.setBroadcasterRole(checkedId == R.id.radioButtonBroadcaster);
         });
     }
 
     public void joinLeave(View view) {
-        RadioGroup radioGroup = findViewById(com.example.agora_manager.R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
 
         if (!agoraManager.isJoined()) {
             int result = agoraManager.joinChannel();

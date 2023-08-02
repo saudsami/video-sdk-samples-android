@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         val adapter = ItemListAdapter(itemList, object : ItemListAdapter.ItemClickListener {
             override fun onItemClick(item: ListItem) {
                 val message = "Clicked on ${item.title}"
-                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+                launchActivity(get_started_sdk_activity::class.java)
+                //Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
             }
         })
 

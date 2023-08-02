@@ -13,8 +13,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "android-reference-app"
-include ':app', ':agora-manager', 'get-started-sdk'
-project(':get-started-sdk').projectDir = new File(rootProject.projectDir, '../get-started-sdk')
+include ':app', ':agora-manager'//, 'get-started-sdk'
+//project(':get-started-sdk').projectDir = new File(rootProject.projectDir, '../get-started-sdk')
 project(':agora-manager').projectDir = new File(rootProject.projectDir, '../agora-manager')
 
 //include ':app', ':agora-manager' //, 'get-started-sdk'
