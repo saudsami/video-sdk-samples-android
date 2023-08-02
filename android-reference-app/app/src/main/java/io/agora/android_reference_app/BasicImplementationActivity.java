@@ -1,6 +1,6 @@
 package io.agora.android_reference_app;
 
-import com.example.agora_manager.AgoraManager;
+import io.agora.agora_manager.AgoraManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
