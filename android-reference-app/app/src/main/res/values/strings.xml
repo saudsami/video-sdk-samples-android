@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">android-reference-app</string>
+    <string name="app_name">Android reference app</string>
     <string name="main_title">Agora Video SDK Samples</string>
+    <string name="Leave">Leave</string>
+    <string name="Join">Join</string>
+    <string name="Authentication_server_url">Authentication serrver URL</string>
 </resources>

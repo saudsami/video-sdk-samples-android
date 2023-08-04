@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'io.agora.agora_manager'
+    namespace 'io.agora.authentication_manager'
     compileSdk 33
 
     defaultConfig {

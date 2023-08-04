@@ -1,8 +1,8 @@
 package io.agora.android_reference_app;
 
-import androidx.appcompat.app.AppCompatActivity;
 import io.agora.agora_manager.AgoraManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

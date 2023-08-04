@@ -17,5 +17,3 @@ rootProject.name = "android-reference-app"
 include ':app', ':agora-manager', 'authentication-workflow'
 project(':agora-manager').projectDir = new File(rootProject.projectDir, '../agora-manager')
 project(':authentication-workflow').projectDir = new File(rootProject.projectDir, '../authentication-workflow')
-
-

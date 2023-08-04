@@ -1,7 +1,8 @@
-package io.agora.agora_manager;
+package io.agora.authentication_manager;
+
+import io.agora.agora_manager.AgoraManager;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import io.agora.rtc2.IRtcEngineEventHandler;
 import okhttp3.OkHttpClient;
@@ -15,7 +16,7 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AgoraManagerAuthentication extends AgoraManager {
+public class AuthenticationManager extends AgoraManager {
     protected final String serverUrl; // The base URL to your token server
     private final int tokenExpiryTime; // Time in seconds after which the token will expire.
     private final IRtcEngineEventHandler baseEventHandler;
@@ -26,7 +27,7 @@ public class AgoraManagerAuthentication extends AgoraManager {
         void onError(String errorMessage);
     }
 
-    public AgoraManagerAuthentication(Context context) {
+    public AuthenticationManager(Context context) {
         super(context);
         // Read the server url and expiry time from the config file
         serverUrl = config.optString("serverUrl");
@@ -43,7 +44,7 @@ public class AgoraManagerAuthentication extends AgoraManager {
             public void onTokenPrivilegeWillExpire(String token) {
                 sendMessage("Token is about to expire");
                 // Get a new token
-                fetchToken(channelName, new AgoraManagerAuthentication.TokenCallback() {
+                fetchToken(channelName, new AuthenticationManager.TokenCallback() {
                     @Override
                     public void onTokenReceived(String rtcToken) {
                         // Use the token to renew
@@ -134,7 +135,7 @@ public class AgoraManagerAuthentication extends AgoraManager {
     public int joinChannelWithToken(String channelName) {
         if (isValidURL(serverUrl)) { // A valid server url is available
             // Fetch a token from the server for channelName
-            fetchToken(channelName, new AgoraManagerAuthentication.TokenCallback() {
+            fetchToken(channelName, new AuthenticationManager.TokenCallback() {
                 @Override
                 public void onTokenReceived(String rtcToken) {
                     // Handle the received rtcToken

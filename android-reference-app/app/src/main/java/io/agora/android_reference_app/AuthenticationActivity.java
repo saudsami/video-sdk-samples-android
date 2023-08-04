@@ -1,7 +1,7 @@
 package io.agora.android_reference_app;
 
 import io.agora.agora_manager.AgoraManager;
-import io.agora.agora_manager.AgoraManagerAuthentication;
+import io.agora.authentication_manager.AuthenticationManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +14,7 @@ import android.widget.Toast;
 import android.widget.RadioGroup;
 
 public class AuthenticationActivity extends AppCompatActivity {
-    private AgoraManagerAuthentication agoraManager;
+    private AuthenticationManager agoraManager;
     private Button btnJoinLeave;
     private EditText editChannelName; // To read the channel name from the UI.
 
@@ -27,7 +27,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         // Find the widgets inside the included layout using the root view
         btnJoinLeave = baseLayout.findViewById(R.id.btnJoinLeave);
         // Create an instance of the AgoraManager class
-        agoraManager = new AgoraManagerAuthentication(this);
+        agoraManager = new AuthenticationManager(this);
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         agoraManager.setVideoFrameLayouts(
@@ -63,7 +63,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         if (!agoraManager.isJoined()) {
             String channelName = editChannelName.getText().toString();
-            agoraManager.fetchToken(channelName, new AgoraManagerAuthentication.TokenCallback() {
+            agoraManager.fetchToken(channelName, new AuthenticationManager.TokenCallback() {
                 @Override
                 public void onTokenReceived(String rtcToken) {
                     // Handle the received rtcToken
@@ -76,10 +76,10 @@ public class AuthenticationActivity extends AppCompatActivity {
                     System.out.println("Error: " + errorMessage);
                 }
             });
-            btnJoinLeave.setText("Leave");
+            btnJoinLeave.setText(R.string.Leave);
         } else {
             agoraManager.leaveChannel();
-            btnJoinLeave.setText("Join");
+            btnJoinLeave.setText(R.string.Join);
             if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.VISIBLE);
         }
     }

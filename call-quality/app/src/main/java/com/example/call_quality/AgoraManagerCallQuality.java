@@ -3,7 +3,7 @@ package io.agora.call_quality;
 import android.content.Context;
 import android.view.View;
 
-import io.agora.agora_manager.AgoraManagerAuthentication;
+import io.agora.agora_manager.AuthenticationManager;
 import io.agora.agora_manager.AgoraManager;
 
 import io.agora.rtc2.Constants;
@@ -14,7 +14,7 @@ import io.agora.rtc2.RtcEngineConfig;
 import io.agora.rtc2.internal.LastmileProbeConfig;
 import io.agora.rtc2.video.VideoEncoderConfiguration;
 
-public class AgoraManagerCallQuality extends AgoraManagerAuthentication {
+public class AgoraManagerCallQuality extends AuthenticationManager {
     // Counters to control the frequency of messages
     private int counter = 0;
     // Quality of the remote video stream being played
@@ -198,7 +198,7 @@ public class AgoraManagerCallQuality extends AgoraManagerAuthentication {
         if (serverUrl.contains("http")) { // A valid server url is available
             // Fetch a token from the server for channelName
             // Uses the uid from the config.json file
-            fetchToken(channelName, 0, new AgoraManagerAuthentication.TokenCallback() {
+            fetchToken(channelName, 0, new AuthenticationManager.TokenCallback() {
                 @Override
                 public void onTokenReceived(String rtcToken) {
                     // Handle the received rtcToken
