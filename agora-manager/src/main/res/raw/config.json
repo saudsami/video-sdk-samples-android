@@ -1,8 +1,8 @@
 {
-    "uid": "0",
-    "appId": "<--Your app Id-->",
-    "channelName": "<--A channel name-->",
-    "rtcToken": "<--Authentication token from Agora Console-->",
-    "serverUrl": "<--Token server url-->",
-    "tokenExpiryTime": "600"
+  "uid": "0",
+  "appId": "9d2498880e934632b38b0a68fa2f1622",
+  "channelName": "demo",
+  "rtcToken": "007eJxTYLjDavb+uIHti9cTjwl/ttPKFtkw84NEWvwxrYs+QqeX3WNXYLBMMTKxtLCwMEi1NDYxMzZKMrZIMkg0s0hLNEozNDMy2j75TEpDICPDjpooJkYGCATxWRhSUnPzGRgAVTIfhA==",
+  "serverUrl": "https://agora-token-service-production-c241.up.railway.app",
+  "tokenExpiryTime": "600"
 }

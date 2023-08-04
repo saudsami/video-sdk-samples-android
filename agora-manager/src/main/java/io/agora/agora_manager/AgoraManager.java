@@ -1,4 +1,4 @@
-package com.example.agora_manager;
+package io.agora.agora_manager;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,6 +10,8 @@ import android.Manifest;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.example.agora_manager.R;
 
 import io.agora.rtc2.Constants;
 import io.agora.rtc2.IRtcEngineEventHandler;
@@ -97,7 +99,7 @@ public class AgoraManager {
 
     public JSONObject readConfig(Context context) {
         try {
-            InputStream inputStream = context.getResources().openRawResource(R.raw.config); //assetManager.open(R.raw.config); //"config.json");
+            InputStream inputStream = context.getResources().openRawResource(R.raw.config);
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);

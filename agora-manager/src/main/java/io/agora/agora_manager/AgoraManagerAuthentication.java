@@ -1,4 +1,4 @@
-package com.example.agora_manager;
+package io.agora.agora_manager;
 
 import android.content.Context;
 
