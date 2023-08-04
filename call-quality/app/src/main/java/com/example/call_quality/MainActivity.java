@@ -1,6 +1,6 @@
-package com.example.call_quality;
+package io.agora.call_quality;
 
-import com.example.agora_manager.AgoraManager;
+import io.agora.agora_manager.AgoraManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
@@ -42,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         // Find the root view of the included layout
         LinearLayout baseLayout = findViewById(R.id.base_layout);
         // Find the widgets inside the included layout using the root view
-        btnJoinLeave = baseLayout.findViewById(com.example.agora_manager.R.id.btnJoinLeave);
+        btnJoinLeave = baseLayout.findViewById(io.agora.agora_manager.R.id.btnJoinLeave);
         btnJoinLeave.setOnClickListener(this::joinLeave);
-        remoteFrameLayout = baseLayout.findViewById(com.example.agora_manager.R.id.remote_video_view_container);
+        remoteFrameLayout = baseLayout.findViewById(io.agora.agora_manager.R.id.remote_video_view_container);
 
         agoraManager = new AgoraManagerCallQuality(this);
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         agoraManager.setVideoFrameLayouts(
-                baseLayout.findViewById(com.example.agora_manager.R.id.local_video_view_container),
-                baseLayout.findViewById(com.example.agora_manager.R.id.remote_video_view_container)
+                baseLayout.findViewById(io.agora.agora_manager.R.id.local_video_view_container),
+                baseLayout.findViewById(io.agora.agora_manager.R.id.remote_video_view_container)
         );
         agoraManager.setListener(new AgoraManagerCallQuality.AgoraManagerCallQualityListener() {
             @Override
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RadioGroup radioGroup = findViewById(com.example.agora_manager.R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(io.agora.agora_manager.R.id.radioGroup);
 
         // Manage Broadcaster and Audience roles in Interactive live streaming
         if (agoraManager.getCurrentProduct()==AgoraManager.ProductName.INTERACTIVE_LIVE_STREAMING
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         radioGroup.setOnCheckedChangeListener((group, checkedId)
-                -> agoraManager.setBroadcasterRole(checkedId == com.example.agora_manager.R.id.radioButtonBroadcaster));
+                -> agoraManager.setBroadcasterRole(checkedId == io.agora.agora_manager.R.id.radioButtonBroadcaster));
 
         // Switch stream quality when a user taps the remote video
         remoteFrameLayout.setOnClickListener(this::setStreamQuality);
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void joinLeave(View view) {
-        RadioGroup radioGroup = findViewById(com.example.agora_manager.R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(io.agora.agora_manager.R.id.radioGroup);
 
         if (!agoraManager.isJoined()) {
             int result = agoraManager.joinChannelWithToken();

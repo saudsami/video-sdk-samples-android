@@ -11,8 +11,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.agora_manager.R;
-
 import io.agora.rtc2.Constants;
 import io.agora.rtc2.IRtcEngineEventHandler;
 import io.agora.rtc2.RtcEngine;

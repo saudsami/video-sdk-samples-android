@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.call_quality'
+    namespace 'io.agora.call_quality'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.call_quality"
+        applicationId "io.agora.call_quality"
         minSdk 24
         targetSdk 33
         versionCode 1

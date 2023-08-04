@@ -1,4 +1,4 @@
-package com.example.call_quality;
+package io.agora.call_quality;
 
 import org.junit.Test;
 
