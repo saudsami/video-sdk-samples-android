@@ -1,8 +1,0 @@
-{
-  "uid": "0",
-  "appId": "9d2498880e934632b38b0a68fa2f1622",
-  "channelName": "demo",
-  "rtcToken": "007eJxTYGhgayzkdQ3uPXPx5Maf1enBHHbq9RJ7XJRcv3hfzLHd4a3AYJliZGJpYWFhkGppbGJmbJRkbJFkkGhmkZZolGZoZmSUJ3AqpSGQkWH5982sjAwQCOKzMKSk5uYzMAAAspAdtg==",
-  "serverUrl": "https://agora-token-service-production-c241.up.railway.app",
-  "tokenExpiryTime": "600"
-}

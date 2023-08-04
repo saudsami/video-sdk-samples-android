@@ -1,7 +1,7 @@
 package io.agora.android_reference_app;
 
-import io.agora.agora_manager.AgoraManager;
-import io.agora.agora_manager.AgoraManagerAuthentication;
+import com.example.agora_manager.AgoraManager;
+import com.example.agora_manager.AgoraManagerAuthentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 

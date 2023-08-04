@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation project(':agora-manager')
     implementation 'io.agora.rtc:full-sdk:4.2.1'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'androidx.core:core-ktx:1.10.1'
