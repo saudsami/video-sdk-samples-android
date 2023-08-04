@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {

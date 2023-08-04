@@ -31,6 +31,9 @@
             android:label="Basic implementation">
         </activity>
 
+        <activity android:name=".AuthenticationActivity"
+            android:label="Authentication workflow">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
