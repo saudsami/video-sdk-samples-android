@@ -15,7 +15,7 @@
             layout="@layout/base_layout" />
 
         <EditText
-            android:id="@+id/serverUrl"
+            android:id="@+id/editServerUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/base_layout"
@@ -29,7 +29,7 @@
             android:id="@+id/editChannelName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/serverUrl"
+            android:layout_below="@id/editServerUrl"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:hint="Type the channel name here"

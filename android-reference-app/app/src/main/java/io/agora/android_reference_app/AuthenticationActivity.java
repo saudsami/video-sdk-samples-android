@@ -17,6 +17,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     private AuthenticationManager agoraManager;
     private Button btnJoinLeave;
     private EditText editChannelName; // To read the channel name from the UI.
+    private EditText editServerUrl; // To read the server Url from the UI.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         editChannelName = findViewById(R.id.editChannelName);
         editChannelName.setText(agoraManager.channelName);
+
+        editServerUrl = findViewById(R.id.editServerUrl);
+        editServerUrl.setText(agoraManager.serverUrl);
     }
 
     public void joinLeave(View view) {
@@ -63,6 +67,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         if (!agoraManager.isJoined()) {
             String channelName = editChannelName.getText().toString();
+            agoraManager.serverUrl = editServerUrl.getText().toString();
             agoraManager.fetchToken(channelName, new AuthenticationManager.TokenCallback() {
                 @Override
                 public void onTokenReceived(String rtcToken) {

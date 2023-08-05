@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AuthenticationManager extends AgoraManager {
-    protected final String serverUrl; // The base URL to your token server
+    public String serverUrl; // The base URL to your token server
     private final int tokenExpiryTime; // Time in seconds after which the token will expire.
     private final IRtcEngineEventHandler baseEventHandler;
 
