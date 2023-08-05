@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/../authentication-workflow" />
+            <option value="$PROJECT_DIR$/../ensure-channel-quality" />
           </set>
         </option>
       </GradleProjectSettings>

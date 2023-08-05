@@ -34,6 +34,10 @@
         <activity android:name=".AuthenticationActivity"
             android:label="Authentication workflow">
         </activity>
+
+        <activity android:name=".CallQualityActivity"
+            android:label="Ensure channel quality">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
