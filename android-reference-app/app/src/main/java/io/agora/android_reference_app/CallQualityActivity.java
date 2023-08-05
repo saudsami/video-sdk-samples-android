@@ -119,12 +119,12 @@ public class CallQualityActivity extends AppCompatActivity {
         if (!agoraManager.isJoined()) {
             int result = agoraManager.joinChannelWithToken();
             if (result == 0) {
-                btnJoinLeave.setText("Leave");
+                btnJoinLeave.setText(R.string.leave);
                 if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.INVISIBLE);
             }
         } else {
             agoraManager.leaveChannel();
-            btnJoinLeave.setText("Join");
+            btnJoinLeave.setText(R.string.join);
             if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.VISIBLE);
             removeOverlayText();
         }

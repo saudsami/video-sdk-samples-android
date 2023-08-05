@@ -81,10 +81,10 @@ public class AuthenticationActivity extends AppCompatActivity {
                     System.out.println("Error: " + errorMessage);
                 }
             });
-            btnJoinLeave.setText(R.string.Leave);
+            btnJoinLeave.setText(R.string.leave);
         } else {
             agoraManager.leaveChannel();
-            btnJoinLeave.setText(R.string.Join);
+            btnJoinLeave.setText(R.string.join);
             if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.VISIBLE);
         }
     }

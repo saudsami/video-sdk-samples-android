@@ -80,7 +80,7 @@ public class AuthenticationManager extends AgoraManager {
     }
 
     public void fetchToken(String channelName, TokenCallback callback) {
-        fetchToken(channelName, localUid, callback);
+        fetchToken(channelName, config.optInt("uid"), callback);
     }
 
     public void fetchToken(String channelName, int uid, TokenCallback callback) {

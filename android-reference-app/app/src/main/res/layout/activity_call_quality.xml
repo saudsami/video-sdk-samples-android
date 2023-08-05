@@ -21,22 +21,22 @@
             android:layout_below="@+id/base_layout"
             android:layout_marginStart="20dp"
             android:onClick="echoTest"
-            android:text="Start Echo Test" />
+            android:text="@string/start_echo_test" />
 
         <TextView
             android:id="@+id/networkLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/echoTestButton"
+            android:layout_alignBaseline="@id/echoTestButton"
             android:layout_toStartOf="@id/networkStatus"
-            android:text="Network Status: " />
+            android:text="@string/network_status" />
 
         <TextView
             android:id="@+id/networkStatus"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_alignTop="@id/echoTestButton"
+            android:layout_alignBaseline="@id/echoTestButton"
             android:layout_alignParentEnd="true" />
 
 
