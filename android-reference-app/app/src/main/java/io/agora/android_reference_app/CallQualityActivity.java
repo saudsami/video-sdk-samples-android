@@ -1,13 +1,13 @@
 package io.agora.android_reference_app;
 
 import io.agora.agora_manager.AgoraManager;
-import io.agora.authentication_manager.AuthenticationManager;
 import io.agora.call_quality_manager.CallQualityManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -34,7 +34,7 @@ public class CallQualityActivity extends AppCompatActivity {
     }
 
     public void setStreamQuality(View view) {
-        agoraManager.switchStreamQuality();
+       // agoraManager.switchStreamQuality();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class CallQualityActivity extends AppCompatActivity {
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         agoraManager.setVideoFrameLayouts(
-                baseLayout.findViewById(R.id.local_video_view_container),
+                baseLayout.findViewById(R.id.main_video_container),
                 baseLayout.findViewById(R.id.remote_video_view_container)
         );
         agoraManager.setListener(new CallQualityManager.CallQualityManagerListener() {
@@ -62,6 +62,15 @@ public class CallQualityActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onRemoteUserJoined(int remoteUid, SurfaceView surfaceView) {
+
+            }
+
+            @Override
+            public void onRemoteUserLeft(int remoteUid) {
+
+            }
+
             public void onNetworkQuality(int uid, int txQuality, int rxQuality) {
                 // Use down-link network quality to update the network status
                 runOnUiThread(() -> updateNetworkStatus(rxQuality));
@@ -79,7 +88,7 @@ public class CallQualityActivity extends AppCompatActivity {
 
             @Override
             public void onRemoteVideoStats(IRtcEngineEventHandler.RemoteVideoStats stats) {
-                if (stats.uid == agoraManager.remoteUid ) {
+                if (agoraManager.remoteUids.contains(stats.uid) ) {
                     String caption = "Renderer frame rate: " + stats.rendererOutputFrameRate
                             + "\nReceived bitrate: " + stats.receivedBitrate
                             + "\nPublish duration: " + stats.publishDuration

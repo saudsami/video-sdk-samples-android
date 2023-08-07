@@ -6,6 +6,7 @@ import io.agora.authentication_manager.AuthenticationManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         agoraManager.setVideoFrameLayouts(
-                baseLayout.findViewById(R.id.local_video_view_container),
+                baseLayout.findViewById(R.id.main_video_container),
                 baseLayout.findViewById(R.id.remote_video_view_container)
         );
         agoraManager.setListener(new AgoraManager.AgoraManagerListener() {
@@ -40,6 +41,16 @@ public class AuthenticationActivity extends AppCompatActivity {
             public void onMessageReceived(String message) {
                 runOnUiThread(() ->
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onRemoteUserJoined(int remoteUid, SurfaceView surfaceView) {
+
+            }
+
+            @Override
+            public void onRemoteUserLeft(int remoteUid) {
+
             }
         });
 

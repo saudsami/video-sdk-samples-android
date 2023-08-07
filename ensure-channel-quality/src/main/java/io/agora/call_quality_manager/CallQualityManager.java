@@ -226,7 +226,7 @@ public class CallQualityManager extends AuthenticationManager {
         destroyAgoraEngine();
     }
 
-    public void switchStreamQuality() {
+    public void switchStreamQuality(int remoteUid) {
         if (!isJoined() || remoteUid <=0) return;
         highQuality = !highQuality;
 

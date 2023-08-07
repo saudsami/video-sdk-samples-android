@@ -1,22 +1,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relative_layout"
+    android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/local_video_view_container"
-        android:layout_width="320dp"
+        android:id="@+id/main_video_container"
+        android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:layout_margin="6dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/dark_gray" />
 
     <FrameLayout
         android:id="@+id/remote_video_view_container"
         android:layout_width="320dp"
         android:layout_height="240dp"
-        android:background="@android:color/darker_gray" />
+        android:visibility="gone"
+        android:background="@color/dark_gray" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/containerLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:paddingVertical="6dp"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -45,8 +59,6 @@
         android:id="@+id/btnJoinLeave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:onClick="joinLeave"
         android:text="@string/join" />
 

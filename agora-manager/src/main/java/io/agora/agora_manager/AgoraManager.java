@@ -10,6 +10,7 @@ import android.Manifest;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import io.agora.rtc2.Constants;
 import io.agora.rtc2.IRtcEngineEventHandler;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 
 public class AgoraManager {
     // The reference to the Android activity you use for video calling
@@ -38,8 +40,10 @@ public class AgoraManager {
     protected final String appId;
     // The name of the channel to join
     public String channelName;
-    // UIDs of the local and remote users
-    public int localUid, remoteUid=0;
+    // UID of the local user
+    public int localUid;
+    // An object to store uids of remote users
+    public HashSet<Integer> remoteUids = new HashSet<>();
     // Status of the video call
     protected boolean joined = false;
     // Reference to FrameLayouts in your UI for rendering local and remote videos
@@ -129,20 +133,19 @@ public class AgoraManager {
         });
     }
 
-    protected void setupRemoteVideo () {
+    protected void setupRemoteVideo (int remoteUid) {
         // Run code on the UI thread as the code modifies the UI
         activity.runOnUiThread(() -> {
             // Create a new SurfaceView
             remoteSurfaceView = new SurfaceView(mContext);
             remoteSurfaceView.setZOrderMediaOverlay(true);
-            // Add the SurfaceView to a FrameLayout in the UI
-            remoteFrameLayout.addView(remoteSurfaceView);
             // Create and set up a VideoCanvas
             VideoCanvas videoCanvas = new VideoCanvas(remoteSurfaceView,
                     VideoCanvas.RENDER_MODE_FIT, remoteUid);
             agoraEngine.setupRemoteVideo(videoCanvas);
             // Set the visibility
             remoteSurfaceView.setVisibility(View.VISIBLE);
+            mListener.onRemoteUserJoined(remoteUid, remoteSurfaceView);
         });
     }
 
@@ -255,14 +258,14 @@ public class AgoraManager {
             public void onUserJoined(int uid, int elapsed) {
                 sendMessage("Remote user joined " + uid);
                 // Save the uid of the remote user.
-                remoteUid = uid;
+                remoteUids.add(uid);
 
                 if (isBroadcaster && (currentProduct == ProductName.INTERACTIVE_LIVE_STREAMING
                     || currentProduct == ProductName.BROADCAST_STREAMING)) {
                     return;
                 } else {
                     // Set the remote video view for the new user.
-                    setupRemoteVideo();
+                    setupRemoteVideo(uid);
                 }
             }
 
@@ -279,7 +282,8 @@ public class AgoraManager {
             public void onUserOffline(int uid, int reason) {
                 sendMessage("Remote user offline " + uid + " " + reason);
                 activity.runOnUiThread(() -> remoteSurfaceView.setVisibility(View.GONE));
-                remoteUid = 0;
+                remoteUids.remove(uid);
+                mListener.onRemoteUserLeft(uid);
             }
         };
     }
@@ -291,6 +295,8 @@ public class AgoraManager {
 
     public interface AgoraManagerListener {
         void onMessageReceived(String message);
+        void onRemoteUserJoined(int remoteUid, SurfaceView surfaceView);
+        void onRemoteUserLeft(int remoteUid);
     }
 
     protected void sendMessage(String message) {
