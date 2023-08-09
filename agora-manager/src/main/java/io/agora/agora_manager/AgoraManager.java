@@ -53,7 +53,7 @@ public class AgoraManager {
     //SurfaceView to render Remote video in a Container.
     protected SurfaceView remoteSurfaceView;
     protected ProductName currentProduct = ProductName.VIDEO_CALLING;
-    protected boolean isBroadcaster = true;
+    public boolean isBroadcaster = true;
 
     public void setBroadcasterRole(boolean isBroadcaster) {
         this.isBroadcaster = isBroadcaster;
@@ -133,20 +133,29 @@ public class AgoraManager {
         });
     }
 
+    public SurfaceView getLocalVideo() {
+        // Create a SurfaceView object
+        localSurfaceView = new SurfaceView(mContext);
+        // Add it as a child to a FrameLayout.
+        //localFrameLayout.addView(localSurfaceView);
+        localSurfaceView.setVisibility(View.VISIBLE);
+        // Call setupLocalVideo with a VideoCanvas having uid set to 0.
+        agoraEngine.setupLocalVideo(new VideoCanvas(localSurfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0));
+        return localSurfaceView;
+    }
+
     protected void setupRemoteVideo (int remoteUid) {
-        // Run code on the UI thread as the code modifies the UI
-        activity.runOnUiThread(() -> {
-            // Create a new SurfaceView
-            remoteSurfaceView = new SurfaceView(mContext);
-            remoteSurfaceView.setZOrderMediaOverlay(true);
-            // Create and set up a VideoCanvas
-            VideoCanvas videoCanvas = new VideoCanvas(remoteSurfaceView,
-                    VideoCanvas.RENDER_MODE_FIT, remoteUid);
-            agoraEngine.setupRemoteVideo(videoCanvas);
-            // Set the visibility
-            remoteSurfaceView.setVisibility(View.VISIBLE);
-            mListener.onRemoteUserJoined(remoteUid, remoteSurfaceView);
-        });
+        // Create a new SurfaceView
+        remoteSurfaceView = new SurfaceView(mContext);
+        remoteSurfaceView.setZOrderMediaOverlay(true);
+        // Create and set up a VideoCanvas
+        VideoCanvas videoCanvas = new VideoCanvas(remoteSurfaceView,
+                VideoCanvas.RENDER_MODE_FIT, remoteUid);
+        agoraEngine.setupRemoteVideo(videoCanvas);
+        // Set the visibility
+        remoteSurfaceView.setVisibility(View.VISIBLE);
+        // Notify the UI to display the video
+        mListener.onRemoteUserJoined(remoteUid, remoteSurfaceView);
     }
 
     protected boolean setupAgoraEngine() {
@@ -209,7 +218,7 @@ public class AgoraManager {
             if (isBroadcaster) { // Broadcasting Host or Video-calling client
                 options.clientRoleType = Constants.CLIENT_ROLE_BROADCASTER;
                 // Display LocalSurfaceView.
-                setupLocalVideo();
+                // setupLocalVideo();
                 // Start local preview.
                 agoraEngine.startPreview();
             } else { // Audience
@@ -232,11 +241,6 @@ public class AgoraManager {
             agoraEngine.leaveChannel();
             sendMessage("You left the channel");
 
-            activity.runOnUiThread(() -> {
-                // Hide local and remote SurfaceViews
-                if (remoteSurfaceView != null)  remoteSurfaceView.setVisibility(View.GONE);
-                if (localSurfaceView != null) localSurfaceView.setVisibility(View.GONE);
-            });
             // Set the `joined` status to false
             joined = false;
             // Destroy the engine instance

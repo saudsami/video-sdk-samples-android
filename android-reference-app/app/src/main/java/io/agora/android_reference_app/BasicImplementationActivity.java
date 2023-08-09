@@ -16,6 +16,7 @@ public class BasicImplementationActivity extends AppCompatActivity {
     private AgoraManager agoraManager;
     private LinearLayout baseLayout;
     private Button btnJoinLeave;
+    FrameLayout mainFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class BasicImplementationActivity extends AppCompatActivity {
         baseLayout = findViewById(R.id.base_layout);
         // Find the widgets inside the included layout using the root view
         btnJoinLeave = baseLayout.findViewById(R.id.btnJoinLeave);
+        // Find the main video frame
+        mainFrame = findViewById(R.id.main_video_container);
         // Create an instance of the AgoraManager class
         agoraManager = new AgoraManager(this);
         // Set the current product depending on your application
@@ -99,6 +102,11 @@ public class BasicImplementationActivity extends AppCompatActivity {
                 btnJoinLeave.setText("Leave");
                 if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.INVISIBLE);
             }
+            if (agoraManager.isBroadcaster) {
+                //Show local video
+                SurfaceView localVideoSurfaceView = agoraManager.getLocalVideo();
+                mainFrame.addView(localVideoSurfaceView);
+            }
         } else {
             agoraManager.leaveChannel();
             btnJoinLeave.setText("Join");
@@ -110,7 +118,6 @@ public class BasicImplementationActivity extends AppCompatActivity {
                 // Remove the FrameLayout from the LinearLayout
                 linearLayout.removeView(frameLayoutToRemove);
             }
-            FrameLayout mainFrame = findViewById(R.id.main_video_container);
             mainFrame.removeAllViews();
         }
     }
@@ -122,8 +129,6 @@ public class BasicImplementationActivity extends AppCompatActivity {
             // Swap the videos in the small frame and the main frame
             FrameLayout smallFrame = (FrameLayout) v;
             smallFrame.getId();
-
-            FrameLayout mainFrame = findViewById(R.id.main_video_container);
 
             SurfaceView surfaceViewMain = (SurfaceView) mainFrame.getChildAt(0);
             SurfaceView surfaceViewSmall = (SurfaceView) smallFrame.getChildAt(0);
