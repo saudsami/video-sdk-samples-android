@@ -51,10 +51,7 @@ public class CallQualityActivity extends AppCompatActivity {
         agoraManager = new CallQualityManager(this);
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
-        agoraManager.setVideoFrameLayouts(
-                baseLayout.findViewById(R.id.main_video_container),
-                baseLayout.findViewById(R.id.remote_video_view_container)
-        );
+
         agoraManager.setListener(new CallQualityManager.CallQualityManagerListener() {
             @Override
             public void onMessageReceived(String message) {

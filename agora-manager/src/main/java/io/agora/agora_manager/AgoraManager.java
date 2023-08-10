@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.Manifest;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import io.agora.rtc2.Constants;
 import io.agora.rtc2.IRtcEngineEventHandler;
@@ -46,12 +44,7 @@ public class AgoraManager {
     public HashSet<Integer> remoteUids = new HashSet<>();
     // Status of the video call
     protected boolean joined = false;
-    // Reference to FrameLayouts in your UI for rendering local and remote videos
-    protected FrameLayout localFrameLayout, remoteFrameLayout;
-    //SurfaceView to render local video in a Container.
-    protected SurfaceView localSurfaceView;
-    //SurfaceView to render Remote video in a Container.
-    protected SurfaceView remoteSurfaceView;
+    // The Agora product to test
     protected ProductName currentProduct = ProductName.VIDEO_CALLING;
     public boolean isBroadcaster = true;
 
@@ -107,22 +100,17 @@ public class AgoraManager {
             inputStream.read(buffer);
             inputStream.close();
             String jsonString = new String(buffer, StandardCharsets.UTF_8);
-
             return new JSONObject(jsonString);
+
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void setVideoFrameLayouts(FrameLayout localFrameLayout, FrameLayout remoteFrameLayout) {
-        this.localFrameLayout = localFrameLayout;
-        this.remoteFrameLayout = remoteFrameLayout;
-    }
-
     protected void setupLocalVideo() {
         // Run code on the UI thread as the code modifies the UI
-        activity.runOnUiThread(() -> {
+     /*   activity.runOnUiThread(() -> {
             // Create a SurfaceView object
             localSurfaceView = new SurfaceView(mContext);
             // Add it as a child to a FrameLayout.
@@ -131,11 +119,12 @@ public class AgoraManager {
             // Call setupLocalVideo with a VideoCanvas having uid set to 0.
             agoraEngine.setupLocalVideo(new VideoCanvas(localSurfaceView, VideoCanvas.RENDER_MODE_HIDDEN, 0));
         });
+      */
     }
 
     public SurfaceView getLocalVideo() {
         // Create a SurfaceView object
-        localSurfaceView = new SurfaceView(mContext);
+        SurfaceView localSurfaceView = new SurfaceView(mContext);
         // Add it as a child to a FrameLayout.
         //localFrameLayout.addView(localSurfaceView);
         localSurfaceView.setVisibility(View.VISIBLE);
@@ -146,7 +135,7 @@ public class AgoraManager {
 
     protected void setupRemoteVideo (int remoteUid) {
         // Create a new SurfaceView
-        remoteSurfaceView = new SurfaceView(mContext);
+        SurfaceView remoteSurfaceView = new SurfaceView(mContext);
         remoteSurfaceView.setZOrderMediaOverlay(true);
         // Create and set up a VideoCanvas
         VideoCanvas videoCanvas = new VideoCanvas(remoteSurfaceView,
@@ -266,7 +255,7 @@ public class AgoraManager {
 
                 if (isBroadcaster && (currentProduct == ProductName.INTERACTIVE_LIVE_STREAMING
                     || currentProduct == ProductName.BROADCAST_STREAMING)) {
-                    return;
+                    // Remote video does not need to be rendered
                 } else {
                     // Set the remote video view for the new user.
                     setupRemoteVideo(uid);
@@ -285,7 +274,6 @@ public class AgoraManager {
             @Override
             public void onUserOffline(int uid, int reason) {
                 sendMessage("Remote user offline " + uid + " " + reason);
-                activity.runOnUiThread(() -> remoteSurfaceView.setVisibility(View.GONE));
                 remoteUids.remove(uid);
                 mListener.onRemoteUserLeft(uid);
             }

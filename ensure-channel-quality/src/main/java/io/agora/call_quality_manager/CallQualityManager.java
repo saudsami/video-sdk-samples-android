@@ -192,7 +192,7 @@ public class CallQualityManager extends AuthenticationManager {
         echoConfig.intervalInSeconds = 2;
         // Set up the video view
         setupLocalVideo();
-        echoConfig.view = localSurfaceView;
+        //echoConfig.view = localSurfaceView;
 
         // Get a token from the server or from the config file
         if (serverUrl.contains("http")) { // A valid server url is available
@@ -222,7 +222,7 @@ public class CallQualityManager extends AuthenticationManager {
 
     public void stopEchoTest() {
         agoraEngine.stopEchoTest();
-        activity.runOnUiThread(() -> localSurfaceView.setVisibility(View.GONE));
+        //activity.runOnUiThread(() -> localSurfaceView.setVisibility(View.GONE));
         destroyAgoraEngine();
     }
 
