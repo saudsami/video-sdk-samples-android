@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.RadioGroup;
 
-public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivityOld extends AppCompatActivity {
     private AuthenticationManager agoraManager;
     private Button btnJoinLeave;
     private EditText editChannelName; // To read the channel name from the UI.

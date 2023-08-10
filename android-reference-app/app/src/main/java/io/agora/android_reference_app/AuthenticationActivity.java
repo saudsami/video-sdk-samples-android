@@ -5,16 +5,18 @@ import io.agora.authentication_manager.AuthenticationManager;
 
 import android.os.Bundle;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
-public class AuthenticationActivity2 extends BasicImplementationActivity {
-    private AuthenticationManager agoraManager;
+public class AuthenticationActivity extends BasicImplementationActivity {
+    private AuthenticationManager authenticationManager;
     //private Button btnJoinLeave;
     private EditText editChannelName; // To read the channel name from the UI.
     private EditText editServerUrl; // To read the server Url from the UI.
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_authentication; // Default layout resource ID for base activity
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +25,14 @@ public class AuthenticationActivity2 extends BasicImplementationActivity {
         editChannelName.setText(agoraManager.channelName);
 
         editServerUrl = findViewById(R.id.editServerUrl);
-        editServerUrl.setText(agoraManager.serverUrl);
+        editServerUrl.setText(authenticationManager.serverUrl);
     }
 
     @Override
     protected void initializeAgoraManager() {
-        agoraManager = new AuthenticationManager(this);
+        authenticationManager = new AuthenticationManager(this);
+        agoraManager = authenticationManager;
+
         // Set the current product depending on your application
         agoraManager.setCurrentProduct(AgoraManager.ProductName.VIDEO_CALLING);
         // Set up a listener for updating the UI
@@ -38,19 +42,13 @@ public class AuthenticationActivity2 extends BasicImplementationActivity {
     @Override
     protected void join() {
         String channelName = editChannelName.getText().toString();
-        agoraManager.serverUrl = editServerUrl.getText().toString();
-        agoraManager.fetchToken(channelName, new AuthenticationManager.TokenCallback() {
+        authenticationManager.serverUrl = editServerUrl.getText().toString();
+        authenticationManager.fetchToken(channelName, new AuthenticationManager.TokenCallback() {
             @Override
             public void onTokenReceived(String rtcToken) {
                 // Handle the received rtcToken
                 agoraManager.joinChannel(channelName, rtcToken);
-                if (agoraManager.isBroadcaster) {
-                    runOnUiThread(() -> {
-                        // Display the local video
-                        SurfaceView localVideoSurfaceView = agoraManager.getLocalVideo();
-                        mainFrame.addView(localVideoSurfaceView);
-                    });
-                }
+                showLocalVideo();
             }
 
             @Override

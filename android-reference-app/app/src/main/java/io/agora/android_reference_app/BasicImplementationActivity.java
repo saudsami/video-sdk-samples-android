@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.RadioGroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BasicImplementationActivity extends AppCompatActivity {
     protected AgoraManager agoraManager;
     protected LinearLayout baseLayout;
@@ -19,6 +22,7 @@ public class BasicImplementationActivity extends AppCompatActivity {
     protected FrameLayout mainFrame;
     protected LinearLayout containerLayout;
     protected RadioGroup radioGroup;
+    protected Map<Integer, FrameLayout> videoFrameMap;
 
     protected void initializeAgoraManager() {
         agoraManager = new AgoraManager(this);
@@ -28,10 +32,14 @@ public class BasicImplementationActivity extends AppCompatActivity {
         agoraManager.setListener(agoraManagerListener);
     }
 
+    protected int getLayoutResourceId() {
+        return R.layout.activity_basic_implementation; // Default layout resource ID for base activity
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic_implementation);
+        setContentView(getLayoutResourceId());
 
         // Find the root view of the included layout
         baseLayout = findViewById(R.id.base_layout);
@@ -43,8 +51,9 @@ public class BasicImplementationActivity extends AppCompatActivity {
         containerLayout = findViewById(R.id.containerLayout);
         // Find the radio group for role
         radioGroup = findViewById(R.id.radioGroup);
-        // Create an instance of the AgoraManager class
+        videoFrameMap = new HashMap<>();
 
+        // Create an instance of the AgoraManager class
         initializeAgoraManager();
 
         if (agoraManager.getCurrentProduct()==AgoraManager.ProductName.INTERACTIVE_LIVE_STREAMING
@@ -65,10 +74,19 @@ public class BasicImplementationActivity extends AppCompatActivity {
             btnJoinLeave.setText("Leave");
             if (radioGroup.getVisibility() != View.GONE) radioGroup.setVisibility(View.INVISIBLE);
         }
+
+        showLocalVideo();
+    }
+
+    protected void showLocalVideo() {
         if (agoraManager.isBroadcaster) {
-            // Display the local video
-            SurfaceView localVideoSurfaceView = agoraManager.getLocalVideo();
-            mainFrame.addView(localVideoSurfaceView);
+            runOnUiThread(()->{
+                // Display the local video
+                SurfaceView localVideoSurfaceView = agoraManager.getLocalVideo();
+                mainFrame.addView(localVideoSurfaceView);
+                videoFrameMap.put(0, mainFrame);
+                mainFrame.setTag(0);
+            });
         }
     }
 
@@ -85,9 +103,9 @@ public class BasicImplementationActivity extends AppCompatActivity {
         mainFrame.removeAllViews();
     }
 
-    protected void joinLeave(View view) {
+    public void joinLeave(View view) {
         if (!agoraManager.isJoined()) {
-           join();
+            join();
         } else {
             leave();
         }
@@ -120,7 +138,10 @@ public class BasicImplementationActivity extends AppCompatActivity {
                 // Set the background color for the new FrameLayout
                 remoteFrameLayout.setBackgroundResource(R.color.dark_gray);
                 // Set the id for the new FrameLayout
-                remoteFrameLayout.setId(remoteUid);
+                remoteFrameLayout.setId(View.generateViewId());
+                remoteFrameLayout.setTag(remoteUid);
+                videoFrameMap.put(remoteUid, remoteFrameLayout);
+
                 remoteFrameLayout.setOnClickListener(videoClickListener);
                 // Add the new FrameLayout to the parent LinearLayout
                 containerLayout.addView(remoteFrameLayout,layoutParams);
@@ -129,10 +150,15 @@ public class BasicImplementationActivity extends AppCompatActivity {
 
         @Override
         public void onRemoteUserLeft(int remoteUid) {
-            // Assuming you have the reference to your LinearLayout and FrameLayout
-            FrameLayout frameLayoutToRemove = findViewById(remoteUid);
-            // Remove the FrameLayout from the LinearLayout
-            containerLayout.removeView(frameLayoutToRemove);
+            runOnUiThread(() -> {
+                FrameLayout frameLayout = videoFrameMap.get(remoteUid);
+                if (frameLayout.getId() == mainFrame.getId()) {
+                    swapVideo(videoFrameMap.get(0).getId());
+                    frameLayout = videoFrameMap.get(remoteUid);
+                }
+                // Remove the FrameLayout from the LinearLayout
+                containerLayout.removeView(frameLayout);
+            });
         }
     });
 
@@ -140,9 +166,15 @@ public class BasicImplementationActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             // A small video frame was clicked
+            swapVideo(v.getId());
+
+        }
+    });
+
+    protected void swapVideo(int frameId) {
+        runOnUiThread(() -> {
             // Swap the videos in the small frame and the main frame
-            FrameLayout smallFrame = (FrameLayout) v;
-            smallFrame.getId();
+            FrameLayout smallFrame = findViewById(frameId);
 
             SurfaceView surfaceViewMain = (SurfaceView) mainFrame.getChildAt(0);
             SurfaceView surfaceViewSmall = (SurfaceView) smallFrame.getChildAt(0);
@@ -152,8 +184,17 @@ public class BasicImplementationActivity extends AppCompatActivity {
 
             mainFrame.addView(surfaceViewSmall);
             smallFrame.addView(surfaceViewMain);
-        }
-    });
+
+            // Swap tags
+            int tag = (int) mainFrame.getTag();
+            mainFrame.setTag(smallFrame.getTag());
+            smallFrame.setTag(tag);
+
+            // Update the videoFrameMap
+            videoFrameMap.put((int) smallFrame.getTag(), smallFrame);
+            videoFrameMap.put((int) mainFrame.getTag(), mainFrame);
+        });
+    }
 
     @Override
     protected void onDestroy() {
